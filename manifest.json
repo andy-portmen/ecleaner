@@ -1,0 +1,32 @@
+{
+  "name": "eCleaner (Forget Button)",
+  "short_name": "iecleaner",
+  "description": "Quickly delete your browser history, cookies, cache, downloads, forms, and passwords",
+  "author": "Andy Portmen",
+  "version": "0.1.0",
+  "manifest_version": 2,
+  "permissions": [
+    "storage",
+    "tabs",
+    "browsingData"
+  ],
+  "homepage_url": "http://add0n.com/ecleaner.html",
+  "icons": {
+    "16": "data/icons/16.png",
+    "32": "data/icons/32.png",
+    "48": "data/icons/48.png",
+    "128": "data/icons/128.png"
+  },
+  "background": {
+    "scripts": [
+      "common.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "data/icons/16.png",
+      "32": "data/icons/32.png"
+    },
+    "default_popup": "data/panel/index.html"
+  }
+}
