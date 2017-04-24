@@ -1,6 +1,6 @@
 html,
 body {
-  height: 580px;
+  height: 600px;
   width: 560px;
 }
 body {
@@ -43,7 +43,7 @@ input {
   outline: none;
 }
 input[type="radio"]+label {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#f1f1f1" stroke="#e7e7e7" stroke-width="1"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="%23f1f1f1" stroke="%23e7e7e7" stroke-width="1"/></svg>');
   background-repeat:  no-repeat;
   background-position: left 5px center;
   background-size: 16px;
@@ -54,7 +54,7 @@ input[type="radio"]+label {
   border: solid 1px transparent;
 }
 input[type="radio"]:checked+label{
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#fff" stroke="#177ee6" stroke-width="4"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="%23fff" stroke="%23177ee6" stroke-width="4"/></svg>');
   border-color: #c3c3c3;
   background-color: #e0e0e0;
   border-radius: 2px;
@@ -65,6 +65,7 @@ input[type=button] {
 input[type=button]:active {
   opacity: 0.5;
 }
+
 #lists {
   display: flex;
   flex-direction: row;
@@ -99,6 +100,10 @@ input[type=button]:active {
   border-radius: 2px;
   padding: 10px;
   margin-top: 10px;
+}
+#forget input:disabled {
+  background-color: #ccc;
+  border: solid 1px #ddd;
 }
 
 #confirm {
