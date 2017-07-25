@@ -1,7 +1,6 @@
 html,
 body {
-  height: 600px;
-  width: 560px;
+  width: 430px;
 }
 body {
   margin: 0;
@@ -128,6 +127,7 @@ input[type=button]:active {
   background-color: #fff;
   border: solid 1px rgba(0, 0, 0, 0.2);
   margin: 0 2px;
+  padding: 5px;
 }
 #confirm input:active {
   border-color: rgba(0, 0, 0, 0.3);
@@ -136,4 +136,10 @@ input[type=button]:active {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+}
+
+@-moz-document url-prefix() {
+  .chrome {
+    display: none;
+  }
 }
