@@ -3,7 +3,7 @@
   "short_name": "iecleaner",
   "description": "Quickly delete recent browser history, cookies, cache, downloads, forms, and passwords from a defined date",
   "author": "Andy Portmen",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "manifest_version": 2,
   "permissions": [
     "storage",

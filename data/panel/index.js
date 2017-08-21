@@ -3,28 +3,33 @@
 document.getElementById('submit').addEventListener('click', e => {
   e.target.value = 'Please wait ...';
   e.target.disabled = true;
-  const since = Number(document.getElementById('since').querySelector(':checked').value);
+  const since = document.getElementById('since').querySelector(':checked').value
+
   let types = [...document.getElementById('types').querySelectorAll(':checked')].map(e => e.value);
   if (navigator.userAgent.indexOf('Firefox') !== -1) {
     types = types.filter(t => ['appcache', 'fileSystems', 'webSQL'].indexOf(t) === -1);
   }
   const zones = [...document.getElementById('zones').querySelectorAll(':checked')].map(e => e.value);
   // persist
-  localStorage.setItem('since', since);
-
-  const originTypes = zones.reduce((p, c) => Object.assign(p, {[c]: true}), {});
-  if (/Firefox/.test(navigator.userAgent)) {
-    delete originTypes.protectedWeb;
-    delete originTypes.extension;
-  }
-  chrome.browsingData.remove({
-    'since': since ? (new Date()).getTime() - since * 1000 : since,
-    originTypes
-  }, types.reduce((p, c) => Object.assign(p, {[c]: true}), {}), () => {
-    window.setTimeout(() => {
-      e.target.value = 'Done!';
-      window.setTimeout(() => window.close(), 500);
-    }, 500);
+  chrome.storage.local.set({
+    since,
+    time: document.getElementById('time').value
+  }, () => {
+    const originTypes = zones.reduce((p, c) => Object.assign(p, {[c]: true}), {});
+    if (/Firefox/.test(navigator.userAgent)) {
+      delete originTypes.protectedWeb;
+      delete originTypes.extension;
+    }
+    const time = since === 'custom' ? Number(document.getElementById('time').value) * 60 * 60 : Number(since);
+    chrome.browsingData.remove({
+      'since': time ? (new Date()).getTime() - time * 1000 : time,
+      originTypes
+    }, types.reduce((p, c) => Object.assign(p, {[c]: true}), {}), () => {
+      window.setTimeout(() => {
+        e.target.value = 'Done!';
+        window.setTimeout(() => window.close(), 500);
+      }, 500);
+    });
   });
 });
 var last;
@@ -33,7 +38,9 @@ document.body.addEventListener('change', e => {
   const target = e.target;
   // persist
   if (target.type === 'checkbox') {
-    localStorage.setItem(target.value, target.checked);
+    chrome.storage.local.set({
+      [target.value]: target.checked
+    });
   }
   //
   const confirm = target.dataset.confirm;
@@ -59,10 +66,20 @@ document.body.addEventListener('click', e => {
 });
 
 // persist
-[...document.querySelectorAll('[type=checkbox]')].forEach(checkbox => {
-  const value = localStorage.getItem(checkbox.value);
-  if (value !== null) {
-    checkbox.checked = value === 'true';
-  }
-});
-document.getElementById('since').querySelector(`[value="${localStorage.getItem('since')}"]`).checked = true;
+{
+  const checkboxes = [...document.querySelectorAll('[type=checkbox]')];
+  chrome.storage.local.get(checkboxes.reduce((p, c) => Object.assign(p, {
+    [c.value]: c.checked
+  }), {}), prefs => {
+    Object.entries(prefs).forEach(([key, value]) => {
+      document.querySelector(`[value="${key}"]`).checked = value;
+    });
+  });
+  chrome.storage.local.get({
+    since: 604800,
+    time: 24
+  }, prefs => {
+    document.getElementById('since').querySelector(`[value="${prefs.since}"]`).checked = true;
+    document.getElementById('time').value = prefs.time;
+  });
+}

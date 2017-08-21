@@ -64,6 +64,13 @@ input[type=button] {
 input[type=button]:active {
   opacity: 0.5;
 }
+input[type=number] {
+  background-color: #fff;
+  border: solid 1px #c3c3c3;
+  height: 16px;
+  width: 48px;
+  text-indent: 3px;
+}
 
 #lists {
   display: flex;
