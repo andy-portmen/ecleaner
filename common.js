@@ -1,5 +1,31 @@
 'use strict';
 
+chrome.windows.onRemoved.addListener(() => {
+  chrome.storage.local.get({
+    'clean-on-exit': false,
+    'clean-object': null
+  }, prefs => {
+    if (prefs['clean-on-exit'] && prefs['clean-object']) {
+      chrome.windows.getAll({
+        populate: false,
+        windowTypes: ['normal']
+      }, wins => {
+        if (wins.length === 0) {
+          const obj = prefs['clean-object'];
+          chrome.browsingData.remove(obj.options, obj.dataToRemove, () => {
+            chrome.notifications.create(null, {
+              type: 'basic',
+              iconUrl: '/data/icons/48.png',
+              title: 'eCleaner (Forget Button)',
+              message: 'Cleaning before exit is done!'
+            });
+          });
+        }
+      });
+    }
+  });
+});
+
 // FAQs & Feedback
 chrome.storage.local.get({
   'version': null,

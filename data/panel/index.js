@@ -3,7 +3,7 @@
 document.getElementById('submit').addEventListener('click', e => {
   e.target.value = 'Please wait ...';
   e.target.disabled = true;
-  const since = document.getElementById('since').querySelector(':checked').value
+  const since = document.getElementById('since').querySelector(':checked').value;
 
   let types = [...document.getElementById('types').querySelectorAll(':checked')].map(e => e.value);
   if (navigator.userAgent.indexOf('Firefox') !== -1) {
@@ -21,14 +21,24 @@ document.getElementById('submit').addEventListener('click', e => {
       delete originTypes.extension;
     }
     const time = since === 'custom' ? Number(document.getElementById('time').value) * 60 * 60 : Number(since);
-    chrome.browsingData.remove({
-      'since': time ? (new Date()).getTime() - time * 1000 : time,
-      originTypes
-    }, types.reduce((p, c) => Object.assign(p, {[c]: true}), {}), () => {
-      window.setTimeout(() => {
-        e.target.value = 'Done!';
-        window.setTimeout(() => window.close(), 500);
-      }, 500);
+
+    const obj = {
+      options: {
+        'since': time ? (new Date()).getTime() - time * 1000 : time,
+        originTypes
+      },
+      dataToRemove: types.reduce((p, c) => Object.assign(p, {[c]: true}), {})
+    };
+
+    chrome.storage.local.set({
+      'clean-object': obj
+    }, () => {
+      chrome.browsingData.remove(obj.options, obj.dataToRemove, () => {
+        window.setTimeout(() => {
+          e.target.value = 'Done!';
+          window.setTimeout(() => window.close(), 500);
+        }, 500);
+      });
     });
   });
 });
