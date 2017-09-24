@@ -98,18 +98,32 @@ input[type=number] {
   align-items: center;
   color: #d92316;
 }
-#forget input {
+#forget div {
+  display: flex;
   width: 100%;
-  color: #fff;
-  background-color: #d92316;
-  border: solid 1px #c92014;
-  border-radius: 2px;
+}
+#forget input {
   padding: 10px;
   margin-top: 10px;
 }
 #forget input:disabled {
   background-color: #ccc;
   border: solid 1px #ddd;
+}
+#forget #submit {
+  flex: 1;
+  color: #fff;
+  background-color: #d92316;
+  border: solid 1px #c92014;
+  border-left: none;
+  border-radius: 0 2px 2px 0;
+}
+#forget #exit {
+  border-radius: 2px 0 0 2px;
+  border-right: none;
+  color: #000;
+  border: solid 1px #c3c3c3;
+  background-color: #e0e0e0;
 }
 
 #confirm {

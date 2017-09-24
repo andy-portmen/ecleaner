@@ -30,18 +30,51 @@ document.getElementById('submit').addEventListener('click', e => {
       dataToRemove: types.reduce((p, c) => Object.assign(p, {[c]: true}), {})
     };
 
-    chrome.storage.local.set({
-      'clean-object': obj
-    }, () => {
-      chrome.browsingData.remove(obj.options, obj.dataToRemove, () => {
-        window.setTimeout(() => {
-          e.target.value = 'Done!';
-          window.setTimeout(() => window.close(), 500);
-        }, 500);
-      });
+    chrome.browsingData.remove(obj.options, obj.dataToRemove, () => {
+      window.setTimeout(() => {
+        e.target.value = 'Done!';
+        window.setTimeout(() => window.close(), 500);
+      }, 500);
     });
   });
 });
+
+document.getElementById('exit').addEventListener('click', e => {
+  const since = document.getElementById('since').querySelector(':checked').value;
+
+  let types = [...document.getElementById('types').querySelectorAll(':checked')].map(e => e.value);
+  if (navigator.userAgent.indexOf('Firefox') !== -1) {
+    types = types.filter(t => ['appcache', 'fileSystems', 'webSQL'].indexOf(t) === -1);
+  }
+  const zones = [...document.getElementById('zones').querySelectorAll(':checked')].map(e => e.value);
+  const originTypes = zones.reduce((p, c) => Object.assign(p, {[c]: true}), {});
+  if (/Firefox/.test(navigator.userAgent)) {
+    delete originTypes.protectedWeb;
+    delete originTypes.extension;
+  }
+  const time = since === 'custom' ? Number(document.getElementById('time').value) * 60 * 60 : Number(since);
+
+  const obj = {
+    options: {
+      'since': time ? (new Date()).getTime() - time * 1000 : time,
+      originTypes
+    },
+    dataToRemove: types.reduce((p, c) => Object.assign(p, {[c]: true}), {})
+  };
+
+  chrome.storage.local.set({
+    'clean-object': obj,
+    'clean-on-exit': true
+  }, () => {
+    chrome.notifications.create(null, {
+      type: 'basic',
+      iconUrl: '/data/icons/48.png',
+      title: 'eCleaner (Forget Button)',
+      message: 'Cleaning preferences are stored and will apply on every browser exit'
+    });
+  });
+});
+
 var last;
 
 document.body.addEventListener('change', e => {
