@@ -34,5 +34,11 @@
   "options_ui": {
     "page": "data/options/index.html",
     "chrome_style": true
+  },
+  "applications": {
+    "gecko": {
+      "id": "{13ea5d17-aa13-474a-b8cd-891073b53c66}",
+      "strict_min_version": "53.0"
+    }
   }
 }
