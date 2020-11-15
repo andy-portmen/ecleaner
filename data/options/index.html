@@ -2,28 +2,35 @@
 <html>
 <head>
   <title>eCleaner :: Options page</title>
+  <meta charset="utf-8">
   <style>
     body {
-      padding: 10px;
-      font-family: "Helvetica Neue",Helvetica,sans-serif;
-      font-size: 13px;
+      min-width: 500px;
     }
   </style>
 </head>
 
 <body>
+  <table width="100%">
+    <tr>
+      <td><input type="checkbox" id="clean-on-exit"></td>
+      <td><label for="clean-on-exit">Perform the last cleaning job on browser exit (when there is no open browser window)</label></td>
+    </tr>
+    <tr>
+      <td><input type="checkbox" id="notification"></td>
+      <td><label for="notification">Display Desktop notification</label></td>
+    </tr>
+  </table>
+
+  <div id="explore"></div>
+
   <p>
-    <label>
-      <input type="checkbox" id="clean-on-exit">
-      Perform the last cleaning job on browser exit (when there is no open browser window)
-    </label>
+    <button id="reset">Factory Reset</button>
+    <button id="support">Support Development</button> - <button id="save">Save</button>
+    <span id="toast"></span>
   </p>
 
-  <div>
-    <button id="save">Save</button>
-    <span id="status"></span>
-  </div>
-
   <script src="index.js"></script>
+  <script async src="matched.js"></script>
 </body>
 </html>

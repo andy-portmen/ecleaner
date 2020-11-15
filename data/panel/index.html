@@ -14,7 +14,13 @@
             <form action="">
               <input value="300" id="since-1" type="radio" name="since"><label for="since-1">Five minutes</label>
               <input value="7200" id="since-2" type="radio" name="since"><label for="since-2">Two hours</label>
-              <input value="custom" id="since-3" type="radio" name="since"><label for="since-3"><input id="time" type="number" min="1" value="24"> hours</label>
+              <input value="custom" id="since-3" type="radio" name="since"><label for="since-3"><input id="time" type="number" min="1" value="24"> <select id="unit">
+                <option value="minutes">Minutes</option>
+                <option value="hours">Hours</option>
+                <option value="days">Days</option>
+                <option value="weeks">Weeks</option>
+                <option value="months">Months</option>
+              </select></label>
               <input value="604800" id="since-4" type="radio" name="since" checked=true><label for="since-4">One week</label>
               <input value="0" id="since-0" type="radio" name="since" data-confirm="true"><label for="since-0">From day one (dangerous zone!)</label>
             </form>
