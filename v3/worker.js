@@ -1,11 +1,20 @@
 'use strict';
 
+const notify = e => chrome.notifications.create({
+  type: 'basic',
+  iconUrl: '/data/icons/48.png',
+  title: chrome.runtime.getManifest().name,
+  message: e.message || e
+});
+
 chrome.windows.onRemoved.addListener(() => {
+  console.log(11);
   chrome.storage.local.get({
     'clean-on-exit': false,
     'clean-object': null,
     'notification': true
   }, prefs => {
+    console.log(prefs);
     if (prefs['clean-on-exit'] && prefs['clean-object']) {
       chrome.windows.getAll({
         populate: false,
@@ -15,12 +24,8 @@ chrome.windows.onRemoved.addListener(() => {
           const obj = prefs['clean-object'];
           chrome.browsingData.remove(obj.options, obj.dataToRemove, () => {
             if (prefs.notification) {
-              chrome.notifications.create(null, {
-                type: 'basic',
-                iconUrl: '/data/icons/48.png',
-                title: 'eCleaner (Forget Button)',
-                message: 'Cleaning before exit is done!'
-              });
+              const id = notify('Cleaning before Exit...');
+              console.log(id);
             }
           });
         }
@@ -43,10 +48,11 @@ chrome.windows.onRemoved.addListener(() => {
         if (reason === 'install' || (prefs.faqs && reason === 'update')) {
           const doUpdate = (Date.now() - prefs['last-update']) / 1000 / 60 / 60 / 24 > 45;
           if (doUpdate && previousVersion !== version) {
-            tabs.create({
+            tabs.query({active: true, currentWindow: true}, tbs => tabs.create({
               url: page + '?version=' + version + (previousVersion ? '&p=' + previousVersion : '') + '&type=' + reason,
-              active: reason === 'install'
-            });
+              active: reason === 'install',
+              ...(tbs && tbs.length && {index: tbs[0].index + 1})
+            }));
             storage.local.set({'last-update': Date.now()});
           }
         }

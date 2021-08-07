@@ -1,8 +1,9 @@
 {
   "name": "Forget Button - Clean your Browser",
-  "description": "Quickly delete recent browser history, cookies, cache, downloads, forms, and passwords from a defined date",
-  "version": "0.1.7",
-  "manifest_version": 2,
+  "description": "__MSG_description__",
+  "default_locale": "en",
+  "version": "0.3.0",
+  "manifest_version": 3,
   "permissions": [
     "storage",
     "notifications",
@@ -20,16 +21,18 @@
     "256": "data/icons/256.png"
   },
   "background": {
-    "persistent": false,
-    "scripts": [
-      "common.js"
-    ]
+    "service_worker": "worker.js"
   },
-  "browser_action": {
+  "action": {
     "default_popup": "data/panel/index.html"
   },
   "options_ui": {
-    "page": "data/options/index.html",
-    "chrome_style": true
+    "page": "data/options/index.html"
+  },
+  "offline_enabled": true,
+  "commands": {
+    "_execute_action": {
+      "description": "Press the action button"
+    }
   }
 }

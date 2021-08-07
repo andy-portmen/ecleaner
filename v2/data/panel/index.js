@@ -3,7 +3,7 @@
 const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
 
 function settings() {
-  const since = document.getElementById('since').querySelector(':checked').value;
+  const since = document.querySelector('[name=since]:checked').value;
 
   let types = [...document.getElementById('types').querySelectorAll(':checked')].map(e => e.value);
   if (isFirefox) {
@@ -38,6 +38,7 @@ function settings() {
   else {
     time = Number(since);
   }
+  console.log(time);
 
   return {
     time,
