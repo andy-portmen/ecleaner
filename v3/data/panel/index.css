@@ -12,6 +12,10 @@ body {
 table {
   width: 100%;
 }
+a {
+  text-decoration: none;
+  color: #0074cc;
+}
 select {
   border: none;
   font-size: 100%;
@@ -35,7 +39,7 @@ ul {
   margin: 0;
   padding: 0;
 }
-body>div {
+body > div {
   margin: 10px;
 }
 input[type="radio"] {
@@ -44,9 +48,16 @@ input[type="radio"] {
 input {
   outline: none;
 }
-input[type="radio"]+label {
+label {
+  display: flex;
+  align-items: center;
+}
+label input[type=checkbox] {
+  margin-right: 5px;
+}
+input[type="radio"] + label {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="%23f1f1f1" stroke="%23e7e7e7" stroke-width="1"/></svg>');
-  background-repeat:  no-repeat;
+  background-repeat: no-repeat;
   background-position: left 5px center;
   background-size: 16px;
   padding: 3px 5px 3px 26px;
@@ -55,7 +66,7 @@ input[type="radio"]+label {
   cursor: pointer;
   border: solid 1px transparent;
 }
-input[type="radio"]:checked+label{
+input[type="radio"]:checked + label {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="%23fff" stroke="%23177ee6" stroke-width="4"/></svg>');
   background-color: #f1f1f1;
   border-radius: 2px;
@@ -71,7 +82,7 @@ input[type=button][data-checked=true] {
 }
 input[type=number] {
   background-color: #e0e0e0;
-  border: none;;
+  border: none;
   height: 16px;
   width: 48px;
   text-indent: 3px;
@@ -88,6 +99,10 @@ input[type=number] {
   color: #838383;
   flex: 1;
 }
+#types ul,
+#zones ul {
+  margin-top: 10px;
+}
 #types li,
 #zones li {
   color: #000;
@@ -102,6 +117,9 @@ input[type=number] {
   justify-content: center;
   align-items: center;
   color: #d92316;
+}
+body.rating #forget {
+  align-items: end;
 }
 #forget div {
   display: flex;
@@ -130,7 +148,14 @@ input[type=number] {
   background-color: #f1f1f1;
   width: 120px;
 }
-
+#forget #rate {
+  border: none;
+  background-color: #ffc54e;
+  width: 120px;
+}
+#forget #rate[data-hide=true] {
+  display: none;
+}
 #confirm {
   position: absolute;
   top: 0;
@@ -139,17 +164,11 @@ input[type=number] {
   height: 100%;
   margin: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  display: none; /*flex*/
+  display: none; /* flex */
   align-items: center;
   justify-content: center;
 }
-#confirm>div {
-  width: 300px;
-  background-color: #fff;
-  padding: 10px;
-}
 #confirm input {
-  background-color: #fff;
   margin: 0 2px;
   padding: 5px;
   border: none;
@@ -160,7 +179,12 @@ input[type=number] {
 #confirm input:active {
   border-color: rgba(0, 0, 0, 0.3);
 }
-#confirm>div>div {
+#confirm > div {
+  width: 300px;
+  background-color: #fff;
+  padding: 10px;
+}
+#confirm > div > div {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

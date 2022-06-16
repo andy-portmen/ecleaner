@@ -22,7 +22,7 @@
                 <option value="months">Months</option>
               </select></label>
               <input value="604800" id="since-4" type="radio" name="since" checked=true><label for="since-4">One week</label>
-              <input value="0" id="since-0" type="radio" name="since" data-confirm="true"><label for="since-0">From day one (dangerous zone!)</label>
+              <input value="0" id="since-0" type="radio" name="since" data-confirm="true"><label for="since-0">From day one (<b>dangerous zone!</b>)</label>
             </form>
           </td>
         </tr>
@@ -54,8 +54,8 @@
         Remove data accumulated on:
         <ul>
           <li><label title="Normal websites"><input value="unprotectedWeb" type="checkbox" checked="true">Normal websites</label></li>
-          <li><label title="Websites that have been installed as hosted applications (be careful!)."><input value="protectedWeb" data-confirm="true" type="checkbox">Protected websites (<b>be careful!</b>)</label></li>
-          <li><label title="Extensions and packaged applications a user has installed (be _really_ careful!)."><input value="extension" data-confirm="true" type="checkbox">Extensions zone (<b>dangerous zone!</b>)</label></li>
+          <li><label title="Websites that have been installed as hosted applications (be careful!)."><input value="protectedWeb" data-confirm="true" type="checkbox"><a target="_blank" data-href="faq4">Protected websites</a>&nbsp;(<b>be careful!</b>)</label></li>
+          <li><label title="Extensions and packaged applications a user has installed (be _really_ careful!)."><input value="extension" data-confirm="true" type="checkbox"><a target="_blank" data-href="faq4">Extensions zone</a>&nbsp;(<b>dangerous zone!</b>)</label></li>
         </ul>
       </div>
     </div>
@@ -63,6 +63,7 @@
       This action cannot be undone
       <div>
         <input id="exit" type="button" value="Forget on Exit">
+        <input id="rate" type="button" value="Rate Me" data-hide=true>
         <input id="submit" type="button" value="Forget!">
       </div>
     </div>
@@ -76,5 +77,6 @@
       </div>
     </div>
     <script src="index.js"></script>
+    <script src="rate.js"></script>
   </body>
 </html>

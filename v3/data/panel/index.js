@@ -90,7 +90,9 @@ document.getElementById('exit').addEventListener('click', e => {
     'clean-object': obj,
     'clean-on-exit': e.target.dataset.checked === 'false'
   }, () => {
-    let message = 'Cleaning preferences are stored and will be applied on every browser exit';
+    let message = `Cleaning preferences are stored and will be applied on every browser exit.
+
+Note that this feature might not work on some operating systems`;
     if (e.target.dataset.checked === 'true') {
       message = 'Cleaning on the browser exit is disabled';
       e.target.dataset.checked = false;
@@ -169,4 +171,11 @@ document.body.addEventListener('click', e => {
     document.getElementById('time').value = prefs.time;
     document.getElementById('unit').value = prefs.unit;
   });
+}
+
+// links
+for (const a of [...document.querySelectorAll('[data-href]')]) {
+  if (a.hasAttribute('href') === false) {
+    a.href = chrome.runtime.getManifest().homepage_url + '#' + a.dataset.href;
+  }
 }

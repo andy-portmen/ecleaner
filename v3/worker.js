@@ -7,14 +7,12 @@ const notify = e => chrome.notifications.create({
   message: e.message || e
 });
 
-chrome.windows.onRemoved.addListener(() => {
-  console.log(11);
+const clean = () => {
   chrome.storage.local.get({
     'clean-on-exit': false,
     'clean-object': null,
     'notification': true
   }, prefs => {
-    console.log(prefs);
     if (prefs['clean-on-exit'] && prefs['clean-object']) {
       chrome.windows.getAll({
         populate: false,
@@ -24,15 +22,15 @@ chrome.windows.onRemoved.addListener(() => {
           const obj = prefs['clean-object'];
           chrome.browsingData.remove(obj.options, obj.dataToRemove, () => {
             if (prefs.notification) {
-              const id = notify('Cleaning before Exit...');
-              console.log(id);
+              notify('Cleaning before Exit...');
             }
           });
         }
       });
     }
   });
-});
+};
+chrome.windows.onRemoved.addListener(clean);
 
 /* FAQs & Feedback */
 {

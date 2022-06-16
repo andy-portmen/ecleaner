@@ -3,8 +3,8 @@ body {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   background-color: #fff;
   color: #4d5156;
-  margin: 10px;
-  min-height: 130px;
+  min-height: 300px;
+  overflow: hidden;
 }
 select,
 button,
@@ -50,4 +50,5 @@ a:visited {
   display: grid;
   grid-gap: 5px;
   grid-template-columns: min-content 1fr;
+  align-items: center;
 }

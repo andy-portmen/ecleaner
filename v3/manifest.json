@@ -2,7 +2,7 @@
   "name": "Forget Button - Clean your Browser",
   "description": "__MSG_description__",
   "default_locale": "en",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "manifest_version": 3,
   "permissions": [
     "storage",
