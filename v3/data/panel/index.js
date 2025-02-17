@@ -1,6 +1,6 @@
 'use strict';
 
-const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
+const isFirefox = navigator.userAgent.includes('Firefox');
 
 function settings() {
   const since = document.querySelector('[name=since]:checked').value;
@@ -38,7 +38,6 @@ function settings() {
   else {
     time = Number(since);
   }
-  console.log(time);
 
   return {
     time,
@@ -92,7 +91,7 @@ document.getElementById('exit').addEventListener('click', e => {
   }, () => {
     let message = `Cleaning preferences are stored and will be applied on every browser exit.
 
-Note that this feature might not work on some operating systems`;
+This feature might not work on some operating systems`;
     if (e.target.dataset.checked === 'true') {
       message = 'Cleaning on the browser exit is disabled';
       e.target.dataset.checked = false;
@@ -100,12 +99,12 @@ Note that this feature might not work on some operating systems`;
     else {
       e.target.dataset.checked = true;
     }
-    chrome.notifications.create(null, {
+    chrome.notifications.create({
       type: 'basic',
       iconUrl: '/data/icons/48.png',
       title: 'eCleaner (Forget Button)',
       message
-    });
+    }, id => setTimeout(chrome.notifications.clear, 3000, id));
   });
 });
 chrome.storage.local.get({
@@ -167,9 +166,12 @@ document.body.addEventListener('click', e => {
     time: 24,
     unit: 'hours'
   }, prefs => {
-    document.getElementById('since').querySelector(`[value="${prefs.since}"]`).checked = true;
     document.getElementById('time').value = prefs.time;
     document.getElementById('unit').value = prefs.unit;
+    try {
+      document.getElementById('since').querySelector(`[value="${prefs.since}"]`).checked = true;
+    }
+    catch (e) {}
   });
 }
 

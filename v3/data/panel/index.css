@@ -1,13 +1,15 @@
-html,
 body {
-  width: 430px;
-  margin: 0;
+  width: 450px;
+  margin: 10px;
   font-family: sans-serif;
   font-size: 12px;
   background-color: #fcfcfc;
   display: flex;
   flex-direction: column;
   user-select: none;
+  overflow: hidden;
+  max-height: 580px;
+  gap: 10px;
 }
 table {
   width: 100%;
@@ -38,9 +40,6 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-body > div {
-  margin: 10px;
 }
 input[type="radio"] {
   display: none;
